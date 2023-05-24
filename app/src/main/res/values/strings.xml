@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Sabi</string>
+
+    <string name="onboarding_1">Kurikulum Standar Industri Global</string>
+    <string name="onboarding_2">Belajar Fleksibel Sesuai Jadwal Anda</string>
+    <string name="onboarding_3">Code Review dari Developer Expert</string>
+    <string name="desc_1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="app_title">App Title</string>
+    <string name="onboarding_ilustration_1">Onboarding Ilustration 1</string>
+    <string name="what_is_sabi">What is SABI?</string>
+    <string name="active_circle">active_circle</string>
+    <string name="deactive_circle">deactive_circle</string>
+    <string name="skip">Skip</string>
+    <string name="onboarding_ilustration_2">onboarding ilustration 2</string>
+    <string name="why_sabi">Why SABI?</string>
+    <string name="how_to_sabi">How to SABI?</string>
+</resources>
