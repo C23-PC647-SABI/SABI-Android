@@ -11,17 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sabi"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
