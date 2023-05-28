@@ -30,91 +30,76 @@
             android:textColor="@color/purple_500" />
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <ImageView
+        android:id="@+id/iv_onboarding1"
+        android:layout_width="248dp"
+        android:layout_height="206.67dp"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/onboarding_ilustration_1"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@+id/tv_onboarding1_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_onboarding1_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/poppinssemibold"
+        android:text="@string/what_is_sabi"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+    <TextView
+        android:id="@+id/tv_onboarding1_desc"
+        android:layout_width="248dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppinsregular"
+        android:text="@string/desc_1"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_onboarding1_title" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:contentDescription="@string/active_circle"
+            android:src="@drawable/onboarding_active_circle" />
 
-            <ImageView
-                android:id="@+id/iv_onboarding1"
-                android:layout_width="248dp"
-                android:layout_height="206.67dp"
-                android:contentDescription="@string/onboarding_ilustration_1"
-                android:src="@drawable/logo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_onboarding1_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/poppinssemibold"
-                android:text="@string/what_is_sabi"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_onboarding1" />
-
-            <TextView
-                android:id="@+id/tv_onboarding1_desc"
-                android:layout_width="248dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppinsregular"
-                android:text="@string/desc_1"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_onboarding1_title" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/deactive_circle"
+            android:src="@drawable/unboarding_circle" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/onboarding_active_circle"
-                android:contentDescription="@string/active_circle" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/unboarding_circle"
-                android:contentDescription="@string/deactive_circle" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/unboarding_circle"
-                android:contentDescription="@string/deactive_circle" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/deactive_circle"
+            android:src="@drawable/unboarding_circle" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/btn_skip"

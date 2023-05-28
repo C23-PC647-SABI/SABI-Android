@@ -39,5 +39,6 @@ class OnboardingThirdFragment : Fragment(), View.OnClickListener {
     private fun toHome() {
         val intent = Intent(activity, HomeActivity::class.java)
         startActivity(intent)
+        getActivity()?.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }
