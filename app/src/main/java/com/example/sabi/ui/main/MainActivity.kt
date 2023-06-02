@@ -1,10 +1,14 @@
 package com.example.sabi.ui.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.sabi.R
+import com.example.sabi.ui.ViewModelFactory
+import com.example.sabi.ui.home.HomeActivity
 import com.example.sabi.ui.onboarding.screen.OnboardingFirstFragment
 
 class MainActivity : AppCompatActivity() {
@@ -13,6 +17,18 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+        val MainViewModel: MainViewModel by viewModels {
+            factory
+        }
+        MainViewModel.apply {
+            getState().observe(this@MainActivity) {
+                if (it != null) {
+                    toHome()
+                }
+            }
+        }
 
         val fragmentManager = supportFragmentManager
         val first_onboarding_fragment = OnboardingFirstFragment()
@@ -32,5 +48,10 @@ class MainActivity : AppCompatActivity() {
                 )
                 .commit()
         }
+    }
+    private fun toHome() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }

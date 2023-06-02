@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.sabi.R
 import com.example.sabi.databinding.FragmentOnboardingThirdBinding
 import com.example.sabi.ui.home.HomeActivity
+import com.example.sabi.ui.main.MainViewModel
 
 class OnboardingThirdFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentOnboardingThirdBinding? = null
