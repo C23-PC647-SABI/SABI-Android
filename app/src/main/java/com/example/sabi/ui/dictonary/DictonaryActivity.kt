@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityOptionsCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sabi.R
 import com.example.sabi.databinding.ActivityDictonaryBinding
 import com.example.sabi.ui.ViewModelFactory
@@ -25,9 +27,13 @@ class DictonaryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDictonaryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
 
         binding.apply {
+            rvDictonary.layoutManager = layoutManager
+            rvDictonary.addItemDecoration(itemDecoration)
             btnBack.setOnClickListener{
                 val intent = Intent(this@DictonaryActivity, HomeActivity::class.java)
                 startActivity(intent)
@@ -45,6 +51,7 @@ class DictonaryActivity : AppCompatActivity() {
                 }
             }
         }
+        setContentView(binding.root)
     }
     private fun setList(data: List<ResponseListItem?>) {
         val adapter = DictonaryAdapter(data)
