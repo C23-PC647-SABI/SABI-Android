@@ -1,4 +1,4 @@
-package com.example.sabi.local
+package com.example.sabi.data.local
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

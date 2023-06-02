@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.sabi.R
 import com.example.sabi.databinding.FragmentOnboardingThirdBinding
 import com.example.sabi.ui.home.HomeActivity
-import com.example.sabi.ui.main.MainViewModel
 
 class OnboardingThirdFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentOnboardingThirdBinding? = null

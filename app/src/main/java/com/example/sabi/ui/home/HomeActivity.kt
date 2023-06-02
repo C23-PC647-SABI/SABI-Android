@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.sabi.R
 import com.example.sabi.ui.ViewModelFactory
-import com.example.sabi.ui.main.MainViewModel
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

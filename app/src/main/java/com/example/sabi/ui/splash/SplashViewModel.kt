@@ -1,10 +1,10 @@
-package com.example.sabi.ui.main
+package com.example.sabi.ui.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.example.sabi.repository.Repository
+import com.example.sabi.data.repository.Repository
 import kotlinx.coroutines.Dispatchers
 
-class MainViewModel(private val repository: Repository) : ViewModel() {
+class SplashViewModel(private val repository: Repository) : ViewModel() {
     fun getState() = repository.getState().asLiveData(Dispatchers.IO)
 }

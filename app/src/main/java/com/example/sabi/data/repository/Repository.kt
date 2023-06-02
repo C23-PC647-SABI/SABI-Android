@@ -1,7 +1,7 @@
-package com.example.sabi.repository
+package com.example.sabi.data.repository
 
 import com.example.sabi.data.api.ApiService
-import com.example.sabi.local.LocalDataStore
+import com.example.sabi.data.local.LocalDataStore
 import kotlinx.coroutines.flow.Flow
 
 class Repository(apiService: ApiService, private val localDataStore: LocalDataStore) {

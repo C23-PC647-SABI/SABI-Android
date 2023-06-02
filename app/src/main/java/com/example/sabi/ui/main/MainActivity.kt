@@ -18,18 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
-        val MainViewModel: MainViewModel by viewModels {
-            factory
-        }
-        MainViewModel.apply {
-            getState().observe(this@MainActivity) {
-                if (it != null) {
-                    toHome()
-                }
-            }
-        }
-
         val fragmentManager = supportFragmentManager
         val first_onboarding_fragment = OnboardingFirstFragment()
         val fragment = fragmentManager.findFragmentByTag(OnboardingFirstFragment::class.java.simpleName)
