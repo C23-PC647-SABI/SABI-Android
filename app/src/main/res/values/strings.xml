@@ -14,6 +14,7 @@
     <string name="btn_camera_home">Detect sign language movements by pointing the camera and get the translation results.</string>
     <string name="dictonary">Dictonary</string>
     <string name="btn_dictonary_home">See sign language from different letters and words. You can also use the available search feature to find the word you want in sign language.</string>
+    <string name="search">Search</string>
 
     <!-- TODO:Content Description -->
     <string name="app_title">App Title</string>
