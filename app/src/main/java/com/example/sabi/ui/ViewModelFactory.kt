@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.sabi.data.di.Injection
 import com.example.sabi.data.repository.Repository
+import com.example.sabi.ui.camera.CameraViewModel
 import com.example.sabi.ui.dictonary.DictonaryViewModel
 import com.example.sabi.ui.home.HomeViewModel
 import com.example.sabi.ui.splash.SplashViewModel
@@ -16,6 +17,7 @@ class ViewModelFactory private constructor(private val repository: Repository): 
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> return HomeViewModel(repository) as T
             modelClass.isAssignableFrom(SplashViewModel::class.java) -> return SplashViewModel(repository) as T
             modelClass.isAssignableFrom(DictonaryViewModel::class.java) -> return DictonaryViewModel(repository) as T
+            modelClass.isAssignableFrom(CameraViewModel::class.java) -> return CameraViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel : " + modelClass.name)
     }

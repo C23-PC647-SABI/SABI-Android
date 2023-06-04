@@ -1,10 +1,13 @@
 package com.example.sabi.ui.dictonary
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +28,7 @@ class DictonaryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         binding = ActivityDictonaryBinding.inflate(layoutInflater)
 
@@ -37,7 +41,6 @@ class DictonaryActivity : AppCompatActivity() {
             btnBack.setOnClickListener{
                 val intent = Intent(this@DictonaryActivity, HomeActivity::class.java)
                 startActivity(intent)
-                finish()
             }
         }
 
@@ -53,8 +56,10 @@ class DictonaryActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
     }
+    @SuppressLint("NotifyDataSetChanged")
     private fun setList(data: List<ResponseListItem?>) {
         val adapter = DictonaryAdapter(data)
+        adapter.notifyDataSetChanged()
         binding.rvDictonary.adapter = adapter
     }
 
