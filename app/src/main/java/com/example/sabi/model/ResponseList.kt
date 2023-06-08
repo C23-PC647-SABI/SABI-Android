@@ -2,11 +2,11 @@ package com.example.sabi.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseList(
-
-	@field:SerializedName("ResponseList")
-	val responseList: List<ResponseListItem>
-)
+//data class ResponseList(
+//
+//	@field:SerializedName("ResponseList")
+//	val responseList: List<ResponseListItem>
+//)
 
 data class ResponseListItem(
 

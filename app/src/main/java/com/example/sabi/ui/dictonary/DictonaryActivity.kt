@@ -10,12 +10,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sabi.R
-import com.example.sabi.databinding.ActivityDictonaryBinding
 import com.example.sabi.ui.ViewModelFactory
 import com.example.sabi.ui.home.HomeActivity
 import com.example.sabi.data.repository.Result
+import com.example.sabi.databinding.ActivityDictonaryBinding
 import com.example.sabi.model.ResponseListItem
 
 class DictonaryActivity : AppCompatActivity() {
@@ -32,12 +33,13 @@ class DictonaryActivity : AppCompatActivity() {
 
         binding = ActivityDictonaryBinding.inflate(layoutInflater)
 
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        val layoutManager = GridLayoutManager(this, 3)
+//        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
 
         binding.apply {
             rvDictonary.layoutManager = layoutManager
-            rvDictonary.addItemDecoration(itemDecoration)
+//            rvDictonary.addItemDecoration(itemDecoration)
             btnBack.setOnClickListener{
                 val intent = Intent(this@DictonaryActivity, HomeActivity::class.java)
                 startActivity(intent)
@@ -49,7 +51,7 @@ class DictonaryActivity : AppCompatActivity() {
                 is Result.Error -> showLoading(false)
                 is Result.Loading -> showLoading(true)
                 is Result.Success -> {
-                    setList(it.data.responseList)
+                    setList(it.data)
                     showLoading(false)
                 }
             }

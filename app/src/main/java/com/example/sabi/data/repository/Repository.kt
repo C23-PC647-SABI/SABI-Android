@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.sabi.data.api.ApiService
 import com.example.sabi.data.local.LocalDataStore
-import com.example.sabi.model.ResponseList
+import com.example.sabi.model.ResponseListItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
@@ -16,7 +16,7 @@ class Repository(private val apiService: ApiService, private val localDataStore:
         localDataStore.saveState(state)
     }
 
-    fun getDictonaryList(): LiveData<Result<ResponseList>> = liveData(Dispatchers.IO) {
+    fun getDictonaryList(): LiveData<Result<List<ResponseListItem>>> = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
             val response = apiService.getDictonaryList()
