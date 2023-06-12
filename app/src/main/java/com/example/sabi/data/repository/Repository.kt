@@ -7,6 +7,7 @@ import com.example.sabi.data.local.LocalDataStore
 import com.example.sabi.model.ResponseListItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 class Repository(private val apiService: ApiService, private val localDataStore: LocalDataStore) {
 
@@ -20,6 +21,16 @@ class Repository(private val apiService: ApiService, private val localDataStore:
         emit(Result.Loading)
         try {
             val response = apiService.getDictonaryList()
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun searchDictonaryList(query: String): LiveData<Result<List<ResponseListItem>>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getSearchList(query)
             emit(Result.Success(response))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))

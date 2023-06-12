@@ -12,4 +12,9 @@ interface ApiService {
     @GET("list")
     suspend fun getDictonaryList(
     ): List<ResponseListItem>
+
+    @GET("searchWord")
+    suspend fun getSearchList(
+        @Query("word") query: String
+    ): List<ResponseListItem>
 }

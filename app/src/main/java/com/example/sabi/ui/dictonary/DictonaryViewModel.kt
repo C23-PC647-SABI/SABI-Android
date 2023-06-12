@@ -6,4 +6,6 @@ import com.example.sabi.data.repository.Repository
 
 class DictonaryViewModel(private val repository: Repository) : ViewModel() {
     fun getList() = repository.getDictonaryList()
+
+    fun getSearch(query: String) = repository.searchDictonaryList(query)
 }

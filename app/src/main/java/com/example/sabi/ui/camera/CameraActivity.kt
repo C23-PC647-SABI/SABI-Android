@@ -19,6 +19,7 @@ import android.os.HandlerThread
 import android.view.Surface
 import android.view.TextureView
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -27,30 +28,35 @@ import com.example.sabi.R
 import com.example.sabi.databinding.ActivityCameraBinding
 import com.example.sabi.databinding.ActivityDictonaryBinding
 import com.example.sabi.ml.SsdMobilenetV11Metadata1
+import com.example.sabi.ml.Sabimodel
 
 import com.example.sabi.ui.ViewModelFactory
 import com.example.sabi.ui.home.HomeActivity
+import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 
 class CameraActivity : AppCompatActivity() {
 
     lateinit var labels:List<String>
-    val colors = listOf<Int>(
-        Color.BLUE, Color.GREEN, Color.RED, Color.CYAN, Color.GRAY, Color.BLACK,
-        Color.DKGRAY, Color.MAGENTA, Color.YELLOW, Color.RED
-    )
+//    val colors = listOf<Int>(
+//        Color.BLUE, Color.GREEN, Color.RED, Color.CYAN, Color.GRAY, Color.BLACK,
+//        Color.DKGRAY, Color.MAGENTA, Color.YELLOW, Color.RED
+//    )
     val paint = Paint()
+
     lateinit var imageProcessor: ImageProcessor
+    lateinit var model: Sabimodel
     lateinit var bitmap: Bitmap
-    lateinit var cameraDevice: CameraDevice
+    lateinit var imageView: ImageView
+
     lateinit var handler: Handler
+    lateinit var cameraDevice: CameraDevice
     lateinit var cameManager: CameraManager
     lateinit var textureView: TextureView
-    lateinit var imageView: ImageView
-    lateinit var model: SsdMobilenetV11Metadata1
     private lateinit var binding: ActivityCameraBinding
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -61,8 +67,9 @@ class CameraActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         labels = FileUtil.loadLabels(this,"labels.txt")
-        imageProcessor = ImageProcessor.Builder().add(ResizeOp(300,300,ResizeOp.ResizeMethod.BILINEAR)).build()
-        model = SsdMobilenetV11Metadata1.newInstance(this)
+        imageProcessor = ImageProcessor.Builder().add(ResizeOp(224,224,ResizeOp.ResizeMethod.BILINEAR)).build()
+//        model = SsdMobilenetV11Metadata1.newInstance(this)
+        model = Sabimodel.newInstance(this)
         val handlerThread = HandlerThread("videoThread")
         handlerThread.start()
         handler = Handler(handlerThread.looper)
@@ -76,6 +83,8 @@ class CameraActivity : AppCompatActivity() {
 
         imageView = findViewById(R.id.iv_response)
         textureView = findViewById(R.id.textureView)
+
+        paint.setColor(Color.MAGENTA)
 
         textureView.surfaceTextureListener = object:TextureView.SurfaceTextureListener{
             override fun onSurfaceTextureAvailable(
@@ -100,39 +109,34 @@ class CameraActivity : AppCompatActivity() {
 
             override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {
                 bitmap = textureView.bitmap!!
+                var tensorImage = TensorImage(DataType.FLOAT32)
+                tensorImage.load(bitmap)
+                tensorImage = imageProcessor.process(tensorImage)
 
-                var image = TensorImage.fromBitmap(bitmap)
-                image = imageProcessor.process(image)
+                val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+                inputFeature0.loadBuffer(tensorImage.buffer)
 
-                val outputs = model.process(image)
-                val locations = outputs.locationsAsTensorBuffer.floatArray
-                val classes = outputs.classesAsTensorBuffer.floatArray
-                val scores = outputs.scoresAsTensorBuffer.floatArray
-                val numberOfDetections = outputs.numberOfDetectionsAsTensorBuffer.floatArray
+                val outputs = model.process(inputFeature0)
+                val outputFeature0 = outputs.outputFeature0AsTensorBuffer.floatArray
 
-                var mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                var mutable = bitmap.copy(Bitmap.Config.ARGB_8888,true)
                 var canvas = Canvas(mutable)
-
-                val h = mutable.height
-                val w = mutable.width
-
-                paint.textSize= h/15f
-                paint.strokeWidth = h/85f
-
+                var h = bitmap.height
+                var w = bitmap.width
                 var x = 0
-                scores.forEachIndexed { index, fl ->
-                    x = index
-                    x *= 4
-                    if(fl > 0.5){
-                        paint.setColor(colors.get(index))
-                        paint.style = Paint.Style.STROKE
-                        canvas.drawRect(RectF(locations.get(x+1)*w,locations.get(x+1)*h,locations.get(x+3)*w,locations.get(x+3)*h),paint)
-                        paint.style = Paint.Style.FILL
-                        canvas.drawText(labels.get(classes.get(index).toInt())+" "+fl.toString(), locations.get(x+1)*w, locations.get(x)*h,paint)
+
+
+
+                while (x <= 26){
+                    if (outputFeature0.get(x) > 0.45){
+                        Toast.makeText(getApplicationContext(),"output: "+outputFeature0.toString(),Toast.LENGTH_SHORT).show();
                     }
+
+                    x+=3
                 }
 
                 imageView.setImageBitmap(mutable)
+
             }
 
         }
@@ -152,13 +156,6 @@ class CameraActivity : AppCompatActivity() {
                 Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         cameManager.openCamera(cameManager.cameraIdList[0],object:CameraDevice.StateCallback(){
