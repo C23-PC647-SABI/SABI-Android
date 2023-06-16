@@ -11,7 +11,6 @@ import com.example.sabi.R
 import com.example.sabi.databinding.ActivitySplashScreenBinding
 import com.example.sabi.ui.ViewModelFactory
 import com.example.sabi.ui.home.HomeActivity
-import com.example.sabi.ui.home.HomeViewModel
 import com.example.sabi.ui.main.MainActivity
 
 class SplashScreen : AppCompatActivity() {

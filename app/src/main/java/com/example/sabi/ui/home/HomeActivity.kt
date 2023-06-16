@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import com.example.sabi.R
 import com.example.sabi.databinding.ActivityHomeBinding
 import com.example.sabi.ui.ViewModelFactory
 import com.example.sabi.ui.camera.CameraActivity

@@ -4,12 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.sabi.R
-import com.example.sabi.databinding.ActivityHomeBinding
 import com.example.sabi.databinding.ActivityMainBinding
-import com.example.sabi.ui.ViewModelFactory
 import com.example.sabi.ui.home.HomeActivity
 import com.example.sabi.ui.onboarding.screen.OnboardingFirstFragment
 

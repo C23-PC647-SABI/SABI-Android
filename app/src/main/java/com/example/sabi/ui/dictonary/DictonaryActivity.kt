@@ -4,17 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityOptionsCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sabi.R
 import com.example.sabi.ui.ViewModelFactory
 import com.example.sabi.ui.home.HomeActivity
 import com.example.sabi.data.repository.Result
@@ -36,12 +31,9 @@ class DictonaryActivity : AppCompatActivity() {
         binding = ActivityDictonaryBinding.inflate(layoutInflater)
 
         val layoutManager = GridLayoutManager(this, 3)
-//        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
 
         binding.apply {
             rvDictonary.layoutManager = layoutManager
-//            rvDictonary.addItemDecoration(itemDecoration)
             btnBack.setOnClickListener{
                 val intent = Intent(this@DictonaryActivity, HomeActivity::class.java)
                 startActivity(intent)

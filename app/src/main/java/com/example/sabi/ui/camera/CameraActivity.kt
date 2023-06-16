@@ -1,8 +1,6 @@
 package com.example.sabi.ui.camera
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.AsyncQueryHandler
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,27 +11,18 @@ import android.hardware.camera2.CameraManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.FileUtils
 import android.os.Handler
 import android.os.HandlerThread
 import android.view.Surface
 import android.view.TextureView
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.example.sabi.R
 import com.example.sabi.databinding.ActivityCameraBinding
-import com.example.sabi.databinding.ActivityDictonaryBinding
-import com.example.sabi.ml.SsdMobilenetV11Metadata1
 import com.example.sabi.ml.Sabimodel
-
-import com.example.sabi.ui.ViewModelFactory
 import com.example.sabi.ui.home.HomeActivity
 import org.tensorflow.lite.DataType
-import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
@@ -41,17 +30,11 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 
 class CameraActivity : AppCompatActivity() {
 
-    lateinit var labels:List<String>
-//    val colors = listOf<Int>(
-//        Color.BLUE, Color.GREEN, Color.RED, Color.CYAN, Color.GRAY, Color.BLACK,
-//        Color.DKGRAY, Color.MAGENTA, Color.YELLOW, Color.RED
-//    )
     val paint = Paint()
 
     lateinit var imageProcessor: ImageProcessor
     lateinit var model: Sabimodel
     lateinit var bitmap: Bitmap
-    lateinit var imageView: ImageView
 
     lateinit var handler: Handler
     lateinit var cameraDevice: CameraDevice
@@ -66,9 +49,9 @@ class CameraActivity : AppCompatActivity() {
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        labels = FileUtil.loadLabels(this,"labels.txt")
+        var labels = application.assets.open("label.txt").bufferedReader().readLines()
+
         imageProcessor = ImageProcessor.Builder().add(ResizeOp(224,224,ResizeOp.ResizeMethod.BILINEAR)).build()
-//        model = SsdMobilenetV11Metadata1.newInstance(this)
         model = Sabimodel.newInstance(this)
         val handlerThread = HandlerThread("videoThread")
         handlerThread.start()
@@ -81,7 +64,6 @@ class CameraActivity : AppCompatActivity() {
             }
         }
 
-        imageView = findViewById(R.id.iv_response)
         textureView = findViewById(R.id.textureView)
 
         paint.setColor(Color.MAGENTA)
@@ -119,23 +101,13 @@ class CameraActivity : AppCompatActivity() {
                 val outputs = model.process(inputFeature0)
                 val outputFeature0 = outputs.outputFeature0AsTensorBuffer.floatArray
 
-                var mutable = bitmap.copy(Bitmap.Config.ARGB_8888,true)
-                var canvas = Canvas(mutable)
-                var h = bitmap.height
-                var w = bitmap.width
-                var x = 0
-
-
-
-                while (x <= 26){
-                    if (outputFeature0.get(x) > 0.45){
-                        Toast.makeText(getApplicationContext(),"output: "+outputFeature0.toString(),Toast.LENGTH_SHORT).show();
+                var maxIdx = 0
+                outputFeature0.forEachIndexed{index, fl ->
+                    if(fl> 0.9){
+                        maxIdx = index
                     }
-
-                    x+=3
                 }
-
-                imageView.setImageBitmap(mutable)
+                Toast.makeText(getApplicationContext(),"output: "+labels[maxIdx],Toast.LENGTH_SHORT).show();
 
             }
 
